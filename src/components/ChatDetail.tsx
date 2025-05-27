@@ -31,14 +31,14 @@ const ChatDetail = () => {
   const { roomId } = useParams();
   const [chatStart, setChatStart] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
-  const [email, setEmail] = useState("");
   const location = useLocation();
   const { title } = location.state || {};
+  const emailRef = useRef("");
 
   useEffect(() => {
     if (!accessToken) return;
     const decoded = jwtDecode(accessToken) as JwtPayload & { email: string };
-    setEmail(decoded.email);
+    emailRef.current = decoded.email;
     localStorage.setItem("email", decoded.email);
 
     const fetchHistory = async () => {
@@ -63,7 +63,7 @@ const ChatDetail = () => {
         if (!message.body) return;
         const receivedMessage: ChatMessage = JSON.parse(message.body);
 
-        if (receivedMessage.senderEmail === email) return;
+        if (receivedMessage.senderEmail === emailRef.current) return;
 
         setMessages((prev) => [...prev, receivedMessage]);
       });
@@ -81,7 +81,7 @@ const ChatDetail = () => {
       const timestamp = new Date().toISOString();
       const payload: ChatPayload = {
         roomId,
-        senderId: email,
+        senderId: emailRef.current,
         type: "SEND",
         content: msg,
         timestamp,
@@ -95,7 +95,7 @@ const ChatDetail = () => {
 
       const myMessage: ChatMessage = {
         messageId: crypto.randomUUID(), // 임시 ID
-        senderEmail: email,
+        senderEmail: emailRef.current,
         content: msg,
         timestamp,
       };
