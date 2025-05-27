@@ -145,20 +145,28 @@ const ChatDetail = () => {
   }, []);
 
   return (
-    <div className="m-6 p-8 rounded-3xl flex flex-col gap-10 w-3/6 shadow-lg shadow-sky-100">
+    <div className="m-6 p-8 rounded-3xl flex flex-col gap-4 w-3/6 shadow-lg shadow-sky-100 h-[80vh]">
       {chatStart && roomId && (
         <Modal onClose={() => setChatStart(false)}>
           <AddChatterModal setModalOpen={setChatStart} roomId={roomId} />
         </Modal>
       )}
+
+      {/* 제목 영역 */}
       <div className="flex justify-between font-Title text-xl border-b pb-2">
         <h1>{title}</h1>
         <button onClick={() => setChatStart(true)}>
           <FaPlus size={24} />
         </button>
       </div>
-      <ChatBubble chatting={messages} />
-      <div className="flex w-full gap-3">
+
+      {/* 채팅 메시지 영역 */}
+      <div className="flex-1 overflow-y-auto">
+        <ChatBubble chatting={messages} />
+      </div>
+
+      {/* 입력창 */}
+      <div className="flex w-full gap-3 pt-2">
         <input
           className="w-full border rounded-xl p-2 font-Title"
           placeholder="Type your message here..."
