@@ -93,15 +93,6 @@ const ChatDetail = () => {
         {},
         JSON.stringify(payload)
       );
-
-      // 클라이언트에서도 즉시 화면에 보이게 하기
-      const myMessage: ChatMessage = {
-        messageId: crypto.randomUUID(), // 임시 ID
-        senderEmail: email,
-        content: msg,
-        timestamp,
-      };
-      setMessages((prev) => [...prev, myMessage]);
     }
   };
 

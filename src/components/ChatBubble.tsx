@@ -24,7 +24,7 @@ const ChatBubble = ({ chatting }: Props) => {
         >
           <h3
             className={`font-Title px-4 p-2 rounded-3xl ${
-              item.senderEmail === "me"
+              item.senderEmail === email
                 ? "bg-[#2F97FF] text-white"
                 : "bg-[#EDEDEC] text-black"
             }`}
