@@ -7,6 +7,7 @@ import { getChatDetail } from "../apis/chat.api";
 import { IoIosSend } from "react-icons/io";
 import Modal from "./Modal/Modal";
 import AddChatterModal from "./Modal/AddChatterModal";
+import { FaPlus } from "react-icons/fa";
 
 export type ChatMessage = {
   senderEmail: string;
@@ -152,6 +153,9 @@ const ChatDetail = () => {
       )}
       <div className="flex justify-between font-Title text-xl border-b pb-2">
         <h1>{title}</h1>
+        <button onClick={() => setChatStart(true)}>
+          <FaPlus size={24} />
+        </button>
       </div>
       <ChatBubble chatting={messages} />
       <div className="flex w-full gap-3">
