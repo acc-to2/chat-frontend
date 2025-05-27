@@ -57,7 +57,7 @@ const ChatDetail2 = () => {
     };
 
     stompClient.current.send(
-      `/chat/ws/${roomId}/send`,
+      `/chat/${roomId}/send`,
       {},
       JSON.stringify(payload)
     );
@@ -84,7 +84,7 @@ const ChatDetail2 = () => {
       };
 
       stompClient.current?.send(
-        `/chat/ws/${roomId}/in`,
+        `/chat/${roomId}/in`,
         {},
         JSON.stringify(payload)
       );
@@ -115,7 +115,7 @@ const ChatDetail2 = () => {
         };
 
         stompClient.current.send(
-          `/chat/ws/${roomId}/out`,
+          `/chat/${roomId}/out`,
           {},
           JSON.stringify(payload)
         );
