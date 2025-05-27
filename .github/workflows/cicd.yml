@@ -8,22 +8,21 @@ on:
     branches:
       - main
   env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: ${{ secrets.SOURCE_DIR }}
-          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
-          VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
-          VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
-          VITE_TOKEN_URI: ${{ secrets.VITE_TOKEN_URI }}
+    AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_REGION: ${{ secrets.AWS_REGION }}
+    SOURCE_DIR: ${{ secrets.SOURCE_DIR }}
+    VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
+    VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
+    VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
+    VITE_TOKEN_URI: ${{ secrets.VITE_TOKEN_URI }}
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -34,8 +33,6 @@ jobs:
         run: npm install
 
       - name: Set Environment Variables
-       
-
 
       - name: Build
         run: npm run build
@@ -55,14 +52,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Set Environment Variables
-        run: |
-        echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> .env
-        echo "VITE_CLIENT_SECRET=${{ secrets.VITE_CLIENT_SECRET }}" >> .env
-        echo "VITE_REDIRECT_URI=${{ secrets.VITE_REDIRECT_URI }}" >> .env
-        echo "VITE_TOKEN_URI=${{ secrets.VITE_TOKEN_URI }}" >> .env
-
-    
       - name: Build
         run: npm run build
 
