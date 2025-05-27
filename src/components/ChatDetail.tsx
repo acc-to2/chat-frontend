@@ -23,8 +23,9 @@ const ChatDetail = () => {
 
   useEffect(() => {
     const fetchHistory = async () => {
+      if (!roomId) return;
       try {
-        const res = await getChatDetail(Number(roomId));
+        const res = await getChatDetail(roomId);
         if (res.status === 200 && Array.isArray(res.data)) {
           setMessages(res.data);
         }
@@ -66,12 +67,9 @@ const ChatDetail = () => {
 
   return (
     <div className="m-6 p-8 rounded-3xl flex flex-col gap-10 w-3/6 shadow-lg shadow-sky-100">
-      {chatStart && (
+      {chatStart && roomId && (
         <Modal onClose={() => setChatStart(false)}>
-          <AddChatterModal
-            setModalOpen={setChatStart}
-            roomId={Number(roomId)}
-          />
+          <AddChatterModal setModalOpen={setChatStart} roomId={roomId} />
         </Modal>
       )}
       <div className="flex justify-between font-Title text-xl border-b pb-2">

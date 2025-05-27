@@ -4,7 +4,7 @@ import { postChatter } from "../../apis/chat.api";
 
 interface FriendProps {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  roomId: number;
+  roomId: string;
 }
 
 const AddChatterModal = ({ setModalOpen, roomId }: FriendProps) => {

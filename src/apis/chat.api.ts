@@ -7,7 +7,7 @@ export const getChatList = async () => {
 };
 
 // 채팅 내역 리스트 조회
-export const getChatDetail = async (room_id: number) => {
+export const getChatDetail = async (room_id: string) => {
   const res = await instance.get(`/chat/${room_id}/list/get`);
   return res;
 };
@@ -22,7 +22,7 @@ export const createChat = (payload: {
 };
 
 // 채팅방 참가자 추가
-export const postChatter = async (room_id: number, emailList: string[]) => {
+export const postChatter = async (room_id: string, emailList: string[]) => {
   const res = await instance.post(
     `/chat/${room_id}/add-friend`,
     {},

@@ -9,7 +9,7 @@ const GroupList = () => {
   const nav = useNavigate();
 
   const [groups, setGroups] = useState<
-    { id: number; name: string; lastChat: string; numChat: number }[]
+    { roomId: number; title: string; message: string; count: number }[]
   >([]);
 
   const handleName = (name: string) => {
@@ -49,12 +49,12 @@ const GroupList = () => {
       <div className="overflow-y-auto max-h-full pr-2">
         {groups.map((chat) => (
           <div
-            onClick={() => handleName(chat.name)}
-            key={chat.id}
+            onClick={() => handleName(chat.title)}
+            key={chat.roomId}
             className="mb-6 pb-4 text-base font-Title border-b-2 flex flex-col gap-2 cursor-pointer"
           >
-            <h3>{chat.name}</h3>
-            <h3 className="text-sm text-gray-500">{chat.lastChat}</h3>
+            <h3>{chat.title}</h3>
+            <h3 className="text-sm text-gray-500">{chat.message}</h3>
           </div>
         ))}
       </div>

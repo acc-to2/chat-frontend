@@ -19,3 +19,9 @@ export const deleteFriend = async (email: string) => {
   });
   return res;
 };
+
+// 채팅방 삭제
+export const deleteChat = async (room_id: string) => {
+  const res = await instance.delete(`/chat/${room_id}/delete`);
+  return res;
+};
