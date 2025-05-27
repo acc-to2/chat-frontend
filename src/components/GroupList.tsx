@@ -16,8 +16,8 @@ const GroupList = () => {
 
   const [selectedRoom, setSelectedRoom] = useState<string>("");
 
-  const handleName = (roomId: string) => {
-    nav(`/chat/${roomId}`);
+  const handleName = (roomId: string, title: string) => {
+    nav(`/chat/${roomId}`, { state: { title } });
   };
   const [chatStart, setChatStart] = useState(false);
 
@@ -63,7 +63,7 @@ const GroupList = () => {
       <div className="overflow-y-auto max-h-full pr-2">
         {groups.map((chat) => (
           <div
-            onClick={() => handleName(chat.title)}
+            onClick={() => handleName(chat.roomId, chat.title)}
             key={chat.roomId}
             className="mb-6 pb-4 text-base font-Title border-b-2 flex flex-col gap-2 cursor-pointer"
           >

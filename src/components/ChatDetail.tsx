@@ -3,7 +3,7 @@ import ChatBubble from "./ChatBubble";
 import ChatInput from "./ChatInput";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getChatDetail } from "../apis/chat.api";
 import Modal from "./Modal/Modal";
 import { FaPlus } from "react-icons/fa";
@@ -32,6 +32,8 @@ const ChatDetail = () => {
   const [chatStart, setChatStart] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
   const [email, setEmail] = useState("");
+  const location = useLocation();
+  const { title } = location.state || {};
 
   useEffect(() => {
     if (!accessToken) return;
@@ -60,6 +62,10 @@ const ChatDetail = () => {
       stompClient.current?.subscribe(`/chat/${roomId}/in`, (message) => {
         if (!message.body) return;
         const receivedMessage: ChatMessage = JSON.parse(message.body);
+
+        // 내 메시지면 무시
+        if (receivedMessage.senderEmail === email) return;
+
         setMessages((prev) => [...prev, receivedMessage]);
       });
     });
@@ -107,7 +113,7 @@ const ChatDetail = () => {
         </Modal>
       )}
       <div className="flex justify-between font-Title text-xl border-b pb-2">
-        <h1>채팅방 이름</h1>
+        <h1>{title}</h1>
         <button onClick={() => setChatStart(true)}>
           <FaPlus size={24} />
         </button>
