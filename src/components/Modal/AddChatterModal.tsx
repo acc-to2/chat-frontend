@@ -53,7 +53,7 @@ const AddChatterModal = ({ setModalOpen, roomId }: FriendProps) => {
   return (
     <div className="flex flex-col p-8 gap-6 w-[400px] h-[600px] bg-white rounded-[16px]">
       <div className="text-center text-lg leading-8 font-Title">
-        그룹 채팅 생성
+        채팅방 멤버 추가
       </div>
       <div className="text-center text-sm leading-8 text-gray-600 font-Title">
         그룹 채팅을 함께할 친구를 선택해주세요
