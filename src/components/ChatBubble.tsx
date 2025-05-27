@@ -14,7 +14,7 @@ const ChatBubble = ({ chatting }: Props) => {
   }, [chatting]);
 
   return (
-    <div className="overflow-y-auto max-h-[500px] pr-2">
+    <div className="pr-2">
       {chatting
         .filter(
           (item): item is ChatMessage =>
