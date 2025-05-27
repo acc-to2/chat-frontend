@@ -52,6 +52,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Set Environment Variables
+        run: |
+          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> .env
+          echo "VITE_CLIENT_SECRET=${{ secrets.VITE_CLIENT_SECRET }}" >> .env
+          echo "VITE_REDIRECT_URI=${{ secrets.VITE_REDIRECT_URI }}" >> .env
+          echo "VITE_TOKEN_URI=${{ secrets.VITE_TOKEN_URI }}" >> .env
+
       - name: Build
         run: npm run build
 
