@@ -19,14 +19,14 @@ const ChatBubble = ({ chatting }: Props) => {
         <div
           key={index}
           className={`flex mb-4 ${
-            item.senderEmail === email ? "justify-start" : "justify-end"
+            item.senderEmail === email ? "justify-end" : "justify-start"
           }`}
         >
           <h3
             className={`font-Title px-4 p-2 rounded-3xl ${
               item.senderEmail === email
-                ? "bg-[#2F97FF] text-white"
-                : "bg-[#EDEDEC] text-black"
+                ? "bg-[#EDEDEC] text-black"
+                : "bg-[#2F97FF] text-white"
             }`}
           >
             {item.content}
