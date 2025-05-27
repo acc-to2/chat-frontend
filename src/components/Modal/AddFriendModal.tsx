@@ -34,7 +34,7 @@ const AddFriendModal = ({ setModalOpen }: FriendProps) => {
       <div className="flex flex-1 flex-col justify-center w-full gap-1.5 font-Title">
         <input
           value={email}
-          placeholder="이메일을 입력해주세요"
+          placeholder="이메일을 입력해주세요!"
           onChange={handleChange}
           className="border border-gray-300 rounded-md py-2 px-3"
         />
