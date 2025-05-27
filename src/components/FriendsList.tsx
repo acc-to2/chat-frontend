@@ -25,7 +25,6 @@ const FriendsList = () => {
       try {
         const res = await getFriends();
         if (res.status === 200) {
-          console.log(res);
           setFriends(res.data.data);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

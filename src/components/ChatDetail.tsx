@@ -8,9 +8,19 @@ import { getChatDetail } from "../apis/chat.api";
 import Modal from "./Modal/Modal";
 import { FaPlus } from "react-icons/fa";
 import AddChatterModal from "./Modal/AddChatterModal";
+import { jwtDecode, type JwtPayload } from "jwt-decode";
 
-type ChatMessage = {
-  sender: string;
+export type ChatMessage = {
+  messageId: string;
+  senderEmail: string;
+  content: string;
+  timestamp: string;
+};
+
+type ChatPayload = {
+  roomId: string;
+  senderId: string;
+  type: "IN" | "OUT" | "SEND";
   content: string;
   timestamp: string;
 };
@@ -20,14 +30,20 @@ const ChatDetail = () => {
   const stompClient = useRef<CompatClient | null>(null);
   const { roomId } = useParams();
   const [chatStart, setChatStart] = useState(false);
+  const accessToken = localStorage.getItem("accessToken");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
+    if (!accessToken) return;
+    const decoded = jwtDecode(accessToken) as JwtPayload & { email: string };
+    setEmail(decoded.email);
+
     const fetchHistory = async () => {
       if (!roomId) return;
       try {
         const res = await getChatDetail(roomId);
-        if (res.status === 200 && Array.isArray(res.data)) {
-          setMessages(res.data);
+        if (res.status === 200) {
+          setMessages(res.data.data);
         }
       } catch (err) {
         console.log("메시지 없음", err);
@@ -36,14 +52,11 @@ const ChatDetail = () => {
 
     fetchHistory();
 
-    const socket = new SockJS("https://to2-chat.shop/chat/ws");
+    const socket = new SockJS("https://api.to2-chat.shop/ws");
     stompClient.current = Stomp.over(socket);
 
     stompClient.current.connect({}, () => {
-      stompClient.current?.subscribe(`${roomId}/in`, (message) => {
-        const chat: ChatMessage = JSON.parse(message.body);
-        setMessages((prev) => [...prev, chat]);
-      });
+      stompClient.current?.subscribe(`/chat/${roomId}/in`, () => {});
     });
 
     return () => {
@@ -51,17 +64,23 @@ const ChatDetail = () => {
         console.log("disconnected");
       });
     };
-  }, [roomId]);
+  }, [accessToken, roomId]);
 
   const handleSendMessage = (msg: string) => {
-    if (stompClient.current && stompClient.current.connected) {
-      const chat: ChatMessage = {
-        sender: "me",
+    if (stompClient.current && stompClient.current.connected && roomId) {
+      const payload: ChatPayload = {
+        roomId: roomId,
+        senderId: email,
+        type: "SEND",
         content: msg,
         timestamp: new Date().toISOString(),
       };
-      stompClient.current.send(`${roomId}/send`, {}, JSON.stringify(chat));
-      setMessages((prev) => [...prev, chat]);
+
+      stompClient.current.send(
+        `/chat/${roomId}/send`,
+        {},
+        JSON.stringify(payload)
+      );
     }
   };
 

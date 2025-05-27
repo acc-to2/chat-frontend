@@ -6,7 +6,7 @@ export const getChatList = async () => {
   return res;
 };
 
-// 채팅 내역 리스트 조회
+// 채팅 내역 상세 조회
 export const getChatDetail = async (room_id: string) => {
   const res = await instance.get(`/chat/${room_id}/list/get`);
   return res;

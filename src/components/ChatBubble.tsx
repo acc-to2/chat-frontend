@@ -1,10 +1,5 @@
 import { useEffect, useRef } from "react";
-
-type ChatMessage = {
-  sender: string;
-  content: string;
-  timestamp: string;
-};
+import type { ChatMessage } from "./ChatDetail";
 
 type Props = {
   chatting: ChatMessage[];
@@ -23,12 +18,12 @@ const ChatBubble = ({ chatting }: Props) => {
         <div
           key={index}
           className={`flex mb-4 ${
-            item.sender === "me" ? "justify-end" : "justify-start"
+            item.senderEmail === "me" ? "justify-end" : "justify-start"
           }`}
         >
           <h3
             className={`font-Title px-4 p-2 rounded-3xl ${
-              item.sender === "me"
+              item.senderEmail === "me"
                 ? "bg-[#2F97FF] text-white"
                 : "bg-[#EDEDEC] text-black"
             }`}

@@ -27,7 +27,6 @@ const ChattingList = () => {
       try {
         const res = await getChatList();
         if (res.status === 200) {
-          console.log(res);
           setIndividuals(res.data.data.privateRoomList);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
