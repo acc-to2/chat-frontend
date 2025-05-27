@@ -55,12 +55,7 @@ const ChatDetail = () => {
     const socket = new SockJS("https://api.to2-chat.shop/ws");
     stompClient.current = Stomp.over(socket);
 
-    stompClient.current?.subscribe(`/chat/${roomId}/in`, (message) => {
-      if (!message.body) return;
-
-      const receivedMessage: ChatMessage = JSON.parse(message.body);
-      setMessages((prev) => [...prev, receivedMessage]);
-    });
+    stompClient.current?.subscribe(`/chat/${roomId}/in`, () => {});
 
     return () => {
       stompClient.current?.disconnect(() => {
