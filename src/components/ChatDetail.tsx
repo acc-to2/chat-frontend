@@ -54,8 +54,13 @@ const ChatDetail = () => {
 
     const socket = new SockJS("https://api.to2-chat.shop/ws");
     stompClient.current = Stomp.over(socket);
+
     stompClient.current.connect({}, () => {
-      stompClient.current?.subscribe(`/chat/${roomId}/in`, () => {});
+      stompClient.current?.subscribe(`/chat/${roomId}/in`, (message) => {
+        if (!message.body) return;
+        const receivedMessage: ChatMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, receivedMessage]);
+      });
     });
 
     return () => {
@@ -67,12 +72,13 @@ const ChatDetail = () => {
 
   const handleSendMessage = (msg: string) => {
     if (stompClient.current && stompClient.current.connected && roomId) {
+      const timestamp = new Date().toISOString();
       const payload: ChatPayload = {
-        roomId: roomId,
+        roomId,
         senderId: email,
         type: "SEND",
         content: msg,
-        timestamp: new Date().toISOString(),
+        timestamp,
       };
 
       stompClient.current.send(
@@ -80,6 +86,15 @@ const ChatDetail = () => {
         {},
         JSON.stringify(payload)
       );
+
+      // 클라이언트에서도 즉시 화면에 보이게 하기
+      const myMessage: ChatMessage = {
+        messageId: crypto.randomUUID(), // 임시 ID
+        senderEmail: email,
+        content: msg,
+        timestamp,
+      };
+      setMessages((prev) => [...prev, myMessage]);
     }
   };
 
