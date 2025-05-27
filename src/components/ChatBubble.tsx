@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import type { ChatMessage } from "./ChatDetail";
+import type { ChatMessage } from "./ChatDetail2";
 
 type Props = {
   chatting: ChatMessage[];
 };
-
 const ChatBubble = ({ chatting }: Props) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const email = localStorage.getItem("email");

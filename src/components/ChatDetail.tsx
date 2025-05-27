@@ -10,7 +10,7 @@ import { FaPlus } from "react-icons/fa";
 import AddChatterModal from "./Modal/AddChatterModal";
 import { jwtDecode, type JwtPayload } from "jwt-decode";
 
-export type ChatMessage = {
+type ChatMessage = {
   messageId: string;
   senderEmail: string;
   content: string;

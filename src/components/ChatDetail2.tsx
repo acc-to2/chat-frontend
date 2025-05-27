@@ -6,11 +6,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { getChatDetail } from "../apis/chat.api";
 import { IoIosSend } from "react-icons/io";
 
-type ChatMessage = {
-  messageId: string;
+export type ChatMessage = {
   senderEmail: string;
   content: string;
-  timestamp: string;
+  timestamp?: string;
 };
 
 type ChatPayload = {
@@ -36,8 +35,14 @@ const ChatDetail2 = () => {
     try {
       const res = await getChatDetail(roomId);
       if (res.status === 200) {
-        setMessages(res.data.data);
-        console.log(res.data.data);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const formatted = res.data.data.map((msg: any) => ({
+          senderEmail: msg.senderEmail,
+          content: msg.content,
+          timestamp: msg.timestamp,
+        }));
+        setMessages(formatted);
+        console.log("이전 채팅 기록:", formatted);
       }
     } catch (err) {
       console.log("메시지 없음", err);
@@ -70,8 +75,13 @@ const ChatDetail2 = () => {
     const message = JSON.parse(payload.body);
     console.log("받은 메시지: ", message);
 
-    if (message.result?.senderEmail) {
-      setMessages((prev) => [...prev, message.result]);
+    if (message.senderId && message.content) {
+      const formattedMessage = {
+        senderEmail: message.senderId,
+        content: message.content,
+        timestamp: message.timestamp,
+      };
+      setMessages((prev) => [...prev, formattedMessage]);
     } else {
       console.warn("잘못된 메시지 구조: ", message);
     }
