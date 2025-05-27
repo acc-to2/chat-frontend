@@ -23,6 +23,11 @@ jobs:
         run: npm install
 
       - name: Set Environment Variables
+        run: |
+          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_CLIENT_SECRET=${{ secrets.VITE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "VITE_REDIRECT_URI=${{ secrets.VITE_REDIRECT_URI }}" >> $GITHUB_ENV
+          echo "VITE_TOKEN_URI=${{ secrets.VITE_TOKEN_URI }}" >> $GITHUB_ENV
 
       - name: Build
         run: npm run build
@@ -44,10 +49,10 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> .env
-          echo "VITE_CLIENT_SECRET=${{ secrets.VITE_CLIENT_SECRET }}" >> .env
-          echo "VITE_REDIRECT_URI=${{ secrets.VITE_REDIRECT_URI }}" >> .env
-          echo "VITE_TOKEN_URI=${{ secrets.VITE_TOKEN_URI }}" >> .env
+          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_CLIENT_SECRET=${{ secrets.VITE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "VITE_REDIRECT_URI=${{ secrets.VITE_REDIRECT_URI }}" >> $GITHUB_ENV
+          echo "VITE_TOKEN_URI=${{ secrets.VITE_TOKEN_URI }}" >> $GITHUB_ENV
 
       - name: Build
         run: npm run build
@@ -62,7 +67,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: ${{ secrets.SOURCE_DIR }}
-          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
-          VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
-          VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
-          VITE_TOKEN_URI: ${{ secrets.VITE_TOKEN_URI }}
