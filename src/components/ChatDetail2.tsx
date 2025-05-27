@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getChatDetail } from "../apis/chat.api";
 import { IoIosSend } from "react-icons/io";
 
-export type ChatMessage = {
+type ChatMessage = {
   messageId: string;
   senderEmail: string;
   content: string;
@@ -66,8 +66,14 @@ const ChatDetail2 = () => {
 
   // 메시지 수신
   const receiveMessage = (payload: { body: string }) => {
-    const message = JSON.parse(payload.body).result;
-    setMessages((prev) => [...prev, message]);
+    const message = JSON.parse(payload.body);
+    console.log("받은 메시지: ", message);
+
+    if (message.result?.senderEmail) {
+      setMessages((prev) => [...prev, message.result]);
+    } else {
+      console.warn("잘못된 메시지 구조: ", message);
+    }
   };
 
   // 연결 성공 시

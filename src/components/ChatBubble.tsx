@@ -15,24 +15,29 @@ const ChatBubble = ({ chatting }: Props) => {
 
   return (
     <div className="overflow-y-auto max-h-[500px] pr-2">
-      {chatting.map((item, index) => (
-        <div
-          key={index}
-          className={`flex mb-4 ${
-            item.senderEmail === email ? "justify-end" : "justify-start"
-          }`}
-        >
-          <h3
-            className={`font-Title px-4 p-2 rounded-3xl ${
-              item.senderEmail === email
-                ? "bg-[#EDEDEC] text-black"
-                : "bg-[#2F97FF] text-white"
+      {chatting
+        .filter(
+          (item): item is ChatMessage =>
+            !!item && !!item.senderEmail && !!item.content
+        )
+        .map((item, index) => (
+          <div
+            key={index}
+            className={`flex mb-4 ${
+              item.senderEmail === email ? "justify-end" : "justify-start"
             }`}
           >
-            {item.content}
-          </h3>
-        </div>
-      ))}
+            <h3
+              className={`font-Title px-4 p-2 rounded-3xl ${
+                item.senderEmail === email
+                  ? "bg-[#EDEDEC] text-black"
+                  : "bg-[#2F97FF] text-white"
+              }`}
+            >
+              {item.content}
+            </h3>
+          </div>
+        ))}
       <div ref={bottomRef} />
     </div>
   );
