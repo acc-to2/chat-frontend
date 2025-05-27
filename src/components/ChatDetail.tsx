@@ -63,7 +63,6 @@ const ChatDetail = () => {
         if (!message.body) return;
         const receivedMessage: ChatMessage = JSON.parse(message.body);
 
-        // 내 메시지면 무시
         if (receivedMessage.senderEmail === email) return;
 
         setMessages((prev) => [...prev, receivedMessage]);
@@ -93,6 +92,14 @@ const ChatDetail = () => {
         {},
         JSON.stringify(payload)
       );
+
+      const myMessage: ChatMessage = {
+        messageId: crypto.randomUUID(), // 임시 ID
+        senderEmail: email,
+        content: msg,
+        timestamp,
+      };
+      setMessages((prev) => [...prev, myMessage]);
     }
   };
 
