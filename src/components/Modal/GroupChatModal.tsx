@@ -28,8 +28,7 @@ const GroupChatModal = ({ setModalOpen }: FriendProps) => {
         isGroup: roomInfo.emailList.length > 1,
       };
       const res = await createChat(payload);
-      if (res.status === 200) {
-        console.log(res);
+      if (res.status === 201) {
         setModalOpen(false);
       }
     } catch (err) {

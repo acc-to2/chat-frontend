@@ -15,7 +15,7 @@ const AddChatterModal = ({ setModalOpen, roomId }: FriendProps) => {
   const handleAccept = async () => {
     try {
       const res = await postChatter(roomId, selectedFriends);
-      if (res.status === 200) {
+      if (res.status === 201) {
         console.log(res);
         setModalOpen(false);
       }
