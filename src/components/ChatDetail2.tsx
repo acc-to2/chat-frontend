@@ -37,6 +37,7 @@ const ChatDetail2 = () => {
       const res = await getChatDetail(roomId);
       if (res.status === 200) {
         setMessages(res.data.data);
+        console.log(res.data.data);
       }
     } catch (err) {
       console.log("메시지 없음", err);
