@@ -37,8 +37,6 @@ const ChatDetail = () => {
   const seenMessageIds = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    console.log(messages);
-
     if (!accessToken) return;
     const decoded = jwtDecode(accessToken) as JwtPayload & { email: string };
     emailRef.current = decoded.email;
@@ -65,10 +63,9 @@ const ChatDetail = () => {
       stompClient.current?.subscribe(`/chat/${roomId}/in`, (message) => {
         if (!message.body) return;
         const receivedMessage: ChatMessage = JSON.parse(message.body);
+
         if (seenMessageIds.current.has(receivedMessage.messageId)) return;
         seenMessageIds.current.add(receivedMessage.messageId);
-
-        if (receivedMessage.senderEmail === emailRef.current) return;
 
         setMessages((prev) => [...prev, receivedMessage]);
       });
@@ -97,14 +94,6 @@ const ChatDetail = () => {
         {},
         JSON.stringify(payload)
       );
-
-      const myMessage: ChatMessage = {
-        messageId: crypto.randomUUID(), // 임시 ID
-        senderEmail: emailRef.current,
-        content: msg,
-        timestamp,
-      };
-      setMessages((prev) => [...prev, myMessage]);
     }
   };
 
