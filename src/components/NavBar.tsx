@@ -16,7 +16,7 @@ const NavBar = () => {
     localStorage.removeItem("pkce_verifier");
     window.location.href =
       `${TOKEN_URI}/logout?client_id=${CLIENT_ID}` +
-      "&logout_uri=http://localhost:5173";
+      "&logout_uri=https://to2-chat.shop";
   };
 
   return (
