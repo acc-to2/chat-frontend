@@ -5,14 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const CognitoOauth: React.FC = () => {
   const nav = useNavigate();
-  const CLIENT_ID =
-    process.env.VITE_CLIENT_ID || import.meta.env.VITE_CLIENT_ID;
-  const CLIENT_SECRET =
-    process.env.VITE_CLIENT_SECRET || import.meta.env.VITE_CLIENT_SECRET;
-  const REDIRECT_URI =
-    process.env.VITE_REDIRECT_URI || import.meta.env.VITE_REDIRECT_URI;
-  const TOKEN_URI =
-    process.env.VITE_TOKEN_URI || import.meta.env.VITE_TOKEN_URI;
+  const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+  const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+  const TOKEN_URI = import.meta.env.VITE_TOKEN_URI;
 
   const fetchToken = async () => {
     const params = new URLSearchParams(window.location.search);
