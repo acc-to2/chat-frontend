@@ -62,6 +62,7 @@ const ChatDetail = () => {
     stompClient.current.connect({}, () => {
       stompClient.current?.subscribe(`/chat/${roomId}/in`, (message) => {
         if (!message.body) return;
+
         const receivedMessage: ChatMessage = JSON.parse(message.body);
 
         if (seenMessageIds.current.has(receivedMessage.messageId)) return;
@@ -94,6 +95,16 @@ const ChatDetail = () => {
         {},
         JSON.stringify(payload)
       );
+
+      const myMessage: ChatMessage = {
+        messageId: crypto.randomUUID(),
+        senderEmail: emailRef.current,
+        content: msg,
+        timestamp,
+      };
+
+      setMessages((prev) => [...prev, myMessage]);
+      seenMessageIds.current.add(myMessage.messageId);
     }
   };
 
