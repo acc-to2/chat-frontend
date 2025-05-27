@@ -37,6 +37,7 @@ const ChatDetail = () => {
     if (!accessToken) return;
     const decoded = jwtDecode(accessToken) as JwtPayload & { email: string };
     setEmail(decoded.email);
+    localStorage.setItem("email", decoded.email);
 
     const fetchHistory = async () => {
       if (!roomId) return;

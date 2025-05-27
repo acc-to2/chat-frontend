@@ -7,6 +7,7 @@ type Props = {
 
 const ChatBubble = ({ chatting }: Props) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -18,7 +19,7 @@ const ChatBubble = ({ chatting }: Props) => {
         <div
           key={index}
           className={`flex mb-4 ${
-            item.senderEmail === "me" ? "justify-end" : "justify-start"
+            item.senderEmail === email ? "justify-end" : "justify-start"
           }`}
         >
           <h3
