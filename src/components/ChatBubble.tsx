@@ -19,7 +19,7 @@ const ChatBubble = ({ chatting }: Props) => {
         <div
           key={index}
           className={`flex mb-4 ${
-            item.senderEmail === email ? "justify-end" : "justify-start"
+            item.senderEmail === email ? "justify-start" : "justify-end"
           }`}
         >
           <h3
