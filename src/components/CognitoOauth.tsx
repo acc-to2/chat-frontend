@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode, type JwtPayload } from "jwt-decode";
 
 const CognitoOauth: React.FC = () => {
   const nav = useNavigate();
@@ -34,10 +35,14 @@ const CognitoOauth: React.FC = () => {
         },
       });
       if (response.status == 200) {
-        console.log("성공 데이터:", response);
+        const decoded = jwtDecode(response.data.access_token) as JwtPayload & {
+          email: string;
+        };
+        localStorage.setItem("email", decoded.email);
         localStorage.setItem("accessToken", response.data.access_token);
         localStorage.setItem("id_token", response.data.id_token);
         localStorage.setItem("refresh_token", response.data.refresh_token);
+
         nav("/main");
       }
     } catch (error) {
