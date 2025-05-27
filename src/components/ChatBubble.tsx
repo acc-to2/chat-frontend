@@ -4,6 +4,7 @@ import type { ChatMessage } from "./ChatDetail";
 type Props = {
   chatting: ChatMessage[];
 };
+
 const ChatBubble = ({ chatting }: Props) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const email = localStorage.getItem("email");
@@ -19,24 +20,30 @@ const ChatBubble = ({ chatting }: Props) => {
           (item): item is ChatMessage =>
             !!item && !!item.senderEmail && !!item.content
         )
-        .map((item, index) => (
-          <div
-            key={index}
-            className={`flex mb-4 ${
-              item.senderEmail === email ? "justify-end" : "justify-start"
-            }`}
-          >
-            <h3
-              className={`font-Title px-4 p-2 rounded-3xl ${
-                item.senderEmail === email
-                  ? "bg-[#EDEDEC] text-black"
-                  : "bg-[#2F97FF] text-white"
+        .map((item, index) => {
+          const isMine = item.senderEmail === email;
+          return (
+            <div
+              key={index}
+              className={`flex flex-col mb-4 ${
+                isMine ? "items-end" : "items-start"
               }`}
             >
-              {item.content}
-            </h3>
-          </div>
-        ))}
+              {!isMine && (
+                <span className="text-xs text-gray-500 ml-2 mb-1">
+                  {item.senderEmail}
+                </span>
+              )}
+              <div
+                className={`font-Title px-4 p-2 rounded-3xl max-w-[70%] break-words ${
+                  isMine ? "bg-[#EDEDEC] text-black" : "bg-[#2F97FF] text-white"
+                }`}
+              >
+                {item.content}
+              </div>
+            </div>
+          );
+        })}
       <div ref={bottomRef} />
     </div>
   );
